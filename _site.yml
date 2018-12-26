@@ -1,12 +1,20 @@
 name: "ss_radix_personal_blog"
-title: "My Blog"
+title: "Shamindra Shrotriya's Blog"
 description: |
-  My Blog
+  Shamindra Shrotriya's personal blog/ site. Some fun posts
+  on math, statistics and the PhD student life.
 output_dir: "docs"
 navbar:
+  title: "Shamindra's Blog"
   right:
     - text: "Home"
       href: index.html
     - text: "About"
       href: about.html
+    - icon: fa fa-rss
+      href: index.xml
+collections:
+  posts:
+    share: [twitter, linkedin]
+base_url: https://www.shamindras.com/
 output: radix::radix_article
