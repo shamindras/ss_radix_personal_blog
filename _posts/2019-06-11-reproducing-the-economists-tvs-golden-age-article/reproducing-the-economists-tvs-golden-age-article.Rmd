@@ -1,0 +1,82 @@
+---
+title: "Reproducing the Economists' - TV's Golden Age article"
+description: |
+  A short description of the post.
+author:
+  - name: Shamindra Shrotriya
+    url: https://www.shamindras.com/
+date: 06-11-2019
+output:
+  radix::radix_article:
+    self_contained: false
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+devtools::install_github("hadley/emo")
+```
+
+# Background
+
+Being a huge TV buff growing up it is great to be living in what is heralded as the "Golden Age of Television" ^[https://en.wikipedia.org/wiki/Golden_Age_of_Television_(2000s%E2%80%93present]. I recently came across this fantastic article in *The Economist* ^[https://www.economist.com/graphic-detail/2018/11/24/tvs-golden-age-is-real] on the same topic which had some beautiful looking illustrative interactive charts.
+
+Naturally as a statistics graduate student I wanted to reproduce the graphics just as a good analysis and `R` coding practice. I thought to document the process here
+in case anyone else wanted to follow along.
+
+# Data and Approach
+
+Here *The Economist* authors very kindly provide all of the data and code for this article and others in an
+public `Github` repository^[https://github.com/TheEconomist/graphic-detail-data].
+
+We will not look at the code for this article (since we are going to build it from scratch ourselves), but only download the required data files.
+
+<aside>
+Honesty system applies here `r emo::ji("smile")`
+</aside>
+
+```{r load_packages, cache=TRUE}
+# Load up the libraries we will use
+library(tidyverse)
+library(here)
+library(magrittr)
+library(lubridate)
+
+# Define the path to the downloaded data CSV
+raw_tv_dat_path <- here::here("submodules",
+                              "graphic-detail-data",
+                              "data",
+                              "2018-11-24_tv-ratings",
+                              "IMDb_Economist_tv_ratings.csv")
+
+# Define new clean column names
+new_colnames <- c("tt_id", "season", "title", "date", 
+                  "avg_rating", "share", "genre")
+
+# Read in data and rename columns
+raw_tv_dat <- readr::read_csv(file = raw_tv_dat_path) %>% 
+                magrittr::set_colnames(x = ., value = new_colnames)                  
+raw_tv_dat %>% 
+  dplyr::select(-tt_id, -genre) %>% 
+  DT::datatable(data = ., 
+                filter = 'top',
+                # width = "60%",
+                options = list(
+                  pageLength = 5))
+```
+
+So we have a nice interactive table layout ready for us to play with.
+We have dropped the `tt_id` i.e. the unique title ID for each show
+to make the table cleaner to display. It also looks like the raw title
+is used in the charts and so this field is likely not needed. Our
+`tibble` has 2,266 rows and 7 fields so a very manageable dataset
+provided here for us to work with `r emo::ji("victory")`.
+
+## The second (easier) plot first
+
+There are 2 nice plots created in the article, let's recreate the second histogram plot first.
+
+```{r tv_hist, cache=TRUE}
+
+```
+

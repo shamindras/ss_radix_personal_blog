@@ -1,0 +1,3 @@
+[submodule "submodules/graphic-detail-data"]
+	path = submodules/graphic-detail-data
+	url = git@github.com:TheEconomist/graphic-detail-data.git
